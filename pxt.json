@@ -1,5 +1,5 @@
 {
-  "name": "minecraft-makecode-ai-poc",
+  "name": "minecraft-makecode-ai-poc-shim",
   "version": "0.0.3",
   "description": "Minimal transport PoC for Minecraft Education MakeCode",
   "license": "MIT",

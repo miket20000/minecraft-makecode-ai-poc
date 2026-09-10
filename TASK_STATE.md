@@ -16,6 +16,14 @@ pakietów Minecraft i własnego targetu PXT.
 - `player.say(AI.ask("hello"))` po komendzie czatu `ai` wyświetlił `hello`
   w rzeczywistym świecie Minecraft: `PASS` dla Code Buildera i świata.
 - Identity nie testuje transportu HTTP i nie spełnia kryterium `PASS-A`.
+- Kandydat Direct HTTP, commit `0135609`, używał jednego wywołania `fetch()` i
+  jednego `pxt.Util.requestAsync()`. Projekt z dokładnie tym SHA został
+  odrzucony jako błąd Extension przy imporcie i ponownie przy Start: `FAIL`.
+- Pierwszy projekt Direct HTTP faktycznie zachował w eksporcie stary SHA
+  `88f5a93`; jego wynik oznaczono `BLOCKED`, a nie jako wynik transportu.
+- Standalone MakeCode nie utworzył projektu z dokładnym SHA po imporcie: `FAIL`.
+- Echo API na Windows loopback przeszło test kontraktu PowerShell, ale nie
+  zarejestrowało żadnego żądania od poprawnego kandydata Direct HTTP.
 
 ## Ograniczenia i decyzje
 
@@ -36,10 +44,10 @@ pakietów Minecraft i własnego targetu PXT.
 
 ## START HERE
 
-1. Utwórz osobny commit Direct HTTP z jedną próbą `fetch()` oraz
-   `pxt.Util.requestAsync()` w Static TypeScript.
-2. Zaimportuj dokładny SHA do kolejnego nowego projektu Code Buildera i zachowaj
-   pełny błąd kompilacji albo runtime.
-3. Jeżeli oba API są niedostępne, wykonaj dokładnie jedną próbę standardowego
-   simulator-side shimu deklarowanego przez `simFiles`.
-4. Zapisuj `PASS`, `FAIL` i `BLOCKED`; nie usuwaj wyniku Identity.
+1. Utwórz osobny commit standardowego simulator-side shimu deklarowanego przez
+   `simFiles`, z `//% promise shim=AI::ask` i jednym `POST /echo`.
+2. Zaimportuj projekt z dokładnym SHA kandydata (normalny importer cache'uje
+   stary ref) i sprawdź Code Builder oraz rzeczywisty świat.
+3. Jeżeli shim nie zostanie załadowany lub skompilowany, zakończ ten wariant
+   jako `FAIL`; nie twórz własnego targetu.
+4. Zapisuj `PASS`, `FAIL` i `BLOCKED`; nie usuwaj wcześniejszych wyników.

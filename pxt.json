@@ -1,6 +1,6 @@
 {
   "name": "minecraft-makecode-ai-poc",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Minimal transport PoC for Minecraft Education MakeCode",
   "license": "MIT",
   "dependencies": {
@@ -8,6 +8,9 @@
   },
   "files": [
     "ai.ts"
+  ],
+  "simFiles": [
+    "sim/ai.ts"
   ],
   "testFiles": [
     "test.ts"

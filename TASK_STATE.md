@@ -11,8 +11,11 @@ pakietów Minecraft i własnego targetu PXT.
 
 - Publiczne repozytorium: `miket20000/minecraft-makecode-ai-poc`.
 - Badany host: `mt`; Minecraft Education i Code Builder są uruchomione.
-- Kandydat 1 (Identity) jest przygotowywany.
-- Wcześniejsze wyniki: brak wykonanych scenariuszy.
+- Kandydat 1 (Identity), commit `88f5a93`, zaimportował się do nowego projektu
+  `AI transport PoC`; kategoria `AI` i blok `AI zapytaj` były widoczne.
+- `player.say(AI.ask("hello"))` po komendzie czatu `ai` wyświetlił `hello`
+  w rzeczywistym świecie Minecraft: `PASS` dla Code Buildera i świata.
+- Identity nie testuje transportu HTTP i nie spełnia kryterium `PASS-A`.
 
 ## Ograniczenia i decyzje
 
@@ -33,9 +36,10 @@ pakietów Minecraft i własnego targetu PXT.
 
 ## START HERE
 
-1. Dokończ minimalny kandydat Identity i wykonaj commit.
-2. Zaimportuj go do nowego projektu Code Builder, nie nadpisując istniejącego.
-3. Potwierdź blok `AI zapytaj [tekst]` oraz `player.say(AI.ask("hello"))`
-   w rzeczywistym świecie Minecraft.
-4. Zapisuj `PASS`, `FAIL` i `BLOCKED`; nie usuwaj wcześniejszych niepowodzeń.
-
+1. Utwórz osobny commit Direct HTTP z jedną próbą `fetch()` oraz
+   `pxt.Util.requestAsync()` w Static TypeScript.
+2. Zaimportuj dokładny SHA do kolejnego nowego projektu Code Buildera i zachowaj
+   pełny błąd kompilacji albo runtime.
+3. Jeżeli oba API są niedostępne, wykonaj dokładnie jedną próbę standardowego
+   simulator-side shimu deklarowanego przez `simFiles`.
+4. Zapisuj `PASS`, `FAIL` i `BLOCKED`; nie usuwaj wyniku Identity.

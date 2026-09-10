@@ -1,6 +1,6 @@
 {
-  "name": "minecraft-makecode-ai-poc-shim",
-  "version": "0.0.3",
+  "name": "minecraft-makecode-ai-poc-editor-probe",
+  "version": "0.0.4",
   "description": "Minimal transport PoC for Minecraft Education MakeCode",
   "license": "MIT",
   "dependencies": {
@@ -9,12 +9,12 @@
   "files": [
     "ai.ts"
   ],
-  "simFiles": [
-    "sim/ai.ts"
-  ],
   "testFiles": [
     "test.ts"
   ],
+  "extension": {
+    "url": "https://miket20000.github.io/minecraft-makecode-ai-poc/"
+  },
   "public": true,
   "supportedTargets": [
     "minecraft"

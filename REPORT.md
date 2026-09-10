@@ -14,6 +14,7 @@ Not established yet.
 | --- | --- | --- | --- | --- |
 | Identity (`88f5a93`) | NOT TESTED | PASS | PASS | Extension imported; category `AI` and block `AI zapytaj` visible; chat command `ai` displayed `hello` in the Minecraft world. This proves Extension execution, not HTTP. |
 | Direct HTTP (`0135609`) | FAIL | FAIL | FAIL | Exact-SHA project was rejected as an Extension error. Code Builder displayed `Looks like there are some errors in the extensions added to this project. How would you like to proceed?` on import and again on Start. Standalone import returned to Home without creating the project. Echo log contained no runtime request. |
+| Simulator-side shim (`8ca7925`; transport code unchanged from `47c67da`) | BLOCKED | PASS | FAIL | Cache-distinct package imported and started in Code Builder. Minecraft received chat command `ai`, but produced neither `hello` nor `AI_ERROR`; Echo received no `OPTIONS` or `POST`. The shim implementation therefore did not provide a completed runtime call. Standalone execution still lacks a Minecraft connection. |
 
 ## Observed limitations
 
@@ -31,6 +32,13 @@ Not established yet.
 - The loopback Echo API contract passed independently on Windows: port 8765
   was initially free and `POST /echo` returned `{"text":"hello"}`. Its log
   contained no request from the Direct HTTP candidate.
+- The standard `//% promise shim=AI::ask` package with its implementation in
+  `simFiles` loaded and the student program started, but the call never returned
+  and the simulator-side file emitted no request to Echo. Code Builder exposed
+  no runtime diagnostic for the stalled call.
+- HTTPS was not tested because neither ordinary Extension mechanism reached
+  the point of issuing an HTTP request; no evidence indicated a localhost,
+  mixed-content, PNA, or CORS-only failure.
 
 ## Recommended architecture
 

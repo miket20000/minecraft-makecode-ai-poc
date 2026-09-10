@@ -24,6 +24,11 @@ pakietów Minecraft i własnego targetu PXT.
 - Standalone MakeCode nie utworzył projektu z dokładnym SHA po imporcie: `FAIL`.
 - Echo API na Windows loopback przeszło test kontraktu PowerShell, ale nie
   zarejestrowało żadnego żądania od poprawnego kandydata Direct HTTP.
+- Kandydat Shim `8ca7925` (kod transportu z `47c67da`, osobna nazwa pakietu
+  wyłącznie przeciw cache) zaimportował się i wystartował. Komenda `ai` dotarła
+  do świata, ale nie było odpowiedzi ani żądania w logu Echo: runtime `FAIL`.
+- HTTPS nie jest wymagany: żaden mechanizm nie wykonał nawet preflightu/POST,
+  więc nie zaobserwowano blokady specyficznej dla localhost/CORS/mixed content.
 
 ## Ograniczenia i decyzje
 
@@ -44,10 +49,11 @@ pakietów Minecraft i własnego targetu PXT.
 
 ## START HERE
 
-1. Utwórz osobny commit standardowego simulator-side shimu deklarowanego przez
-   `simFiles`, z `//% promise shim=AI::ask` i jednym `POST /echo`.
-2. Zaimportuj projekt z dokładnym SHA kandydata (normalny importer cache'uje
-   stary ref) i sprawdź Code Builder oraz rzeczywisty świat.
-3. Jeżeli shim nie zostanie załadowany lub skompilowany, zakończ ten wariant
-   jako `FAIL`; nie twórz własnego targetu.
-4. Zapisuj `PASS`, `FAIL` i `BLOCKED`; nie usuwaj wcześniejszych wyników.
+1. Potwierdź na faktycznym targetconfig brak
+   `appTheme.allowPackageExtensions` i `packages.approvedEditorExtensionUrls`.
+2. Utwórz jeden cache-distinct manifest probe z `extension.url`; bez GitHub
+   Pages i bez pełnej strony.
+3. Zaimportuj probe do kolejnego nowego projektu. Brak przycisku Editor albo
+   iframe kończy Editor Extension jako `FAIL`.
+4. Następnie wykonaj cleanup Echo/portu i plików tymczasowych, zakończ raport
+   jako `NO-GO`, zaktualizuj stan i wykonaj końcowy commit.

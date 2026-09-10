@@ -10,7 +10,9 @@ pakietów Minecraft i własnego targetu PXT.
 ## Stan
 
 - Publiczne repozytorium: `miket20000/minecraft-makecode-ai-poc`.
-- Badany host: `mt`; Minecraft Education i Code Builder są uruchomione.
+- Wynik końcowy: `NO-GO` w zatwierdzonym zakresie.
+- Badany host: `mt`; Minecraft Education 1.26.3200.0, MakeCode target 2.1.27,
+  PXT 12.1.17.
 - Kandydat 1 (Identity), commit `88f5a93`, zaimportował się do nowego projektu
   `AI transport PoC`; kategoria `AI` i blok `AI zapytaj` były widoczne.
 - `player.say(AI.ask("hello"))` po komendzie czatu `ai` wyświetlił `hello`
@@ -21,7 +23,9 @@ pakietów Minecraft i własnego targetu PXT.
   odrzucony jako błąd Extension przy imporcie i ponownie przy Start: `FAIL`.
 - Pierwszy projekt Direct HTTP faktycznie zachował w eksporcie stary SHA
   `88f5a93`; jego wynik oznaczono `BLOCKED`, a nie jako wynik transportu.
-- Standalone MakeCode nie utworzył projektu z dokładnym SHA po imporcie: `FAIL`.
+- Standalone MakeCode uruchomił pusty projekt, lecz bez połączenia zdarzeń i
+  wyników z Minecraftem. Import dokładnego pliku projektu przez CDP nie był
+  powtarzalny: transport standalone `BLOCKED`, nie błąd produktu.
 - Echo API na Windows loopback przeszło test kontraktu PowerShell, ale nie
   zarejestrowało żadnego żądania od poprawnego kandydata Direct HTTP.
 - Kandydat Shim `8ca7925` (kod transportu z `47c67da`, osobna nazwa pakietu
@@ -29,6 +33,12 @@ pakietów Minecraft i własnego targetu PXT.
   do świata, ale nie było odpowiedzi ani żądania w logu Echo: runtime `FAIL`.
 - HTTPS nie jest wymagany: żaden mechanizm nie wykonał nawet preflightu/POST,
   więc nie zaobserwowano blokady specyficznej dla localhost/CORS/mixed content.
+- Targetconfig nie zawiera wartości dla `appTheme.allowPackageExtensions` ani
+  `packages.approvedEditorExtensionUrls`. Kandydat Editor probe `017d4ee`
+  zaimportował zwykłą kategorię/blok, ale nie pokazał przycisku `Editor` i nie
+  załadował iframe: Editor Extension `FAIL`.
+- Brak działającego przepływu `Minecraft -> API -> Minecraft`; `PASS-A` i
+  `PASS-B` nie zostały osiągnięte.
 
 ## Ograniczenia i decyzje
 
@@ -49,11 +59,9 @@ pakietów Minecraft i własnego targetu PXT.
 
 ## START HERE
 
-1. Potwierdź na faktycznym targetconfig brak
-   `appTheme.allowPackageExtensions` i `packages.approvedEditorExtensionUrls`.
-2. Utwórz jeden cache-distinct manifest probe z `extension.url`; bez GitHub
-   Pages i bez pełnej strony.
-3. Zaimportuj probe do kolejnego nowego projektu. Brak przycisku Editor albo
-   iframe kończy Editor Extension jako `FAIL`.
-4. Następnie wykonaj cleanup Echo/portu i plików tymczasowych, zakończ raport
-   jako `NO-GO`, zaktualizuj stan i wykonaj końcowy commit.
+1. Przeczytaj `REPORT.md`; zawiera końcową macierz wyników i ograniczenia.
+2. Nie rozpoczynaj integracji modelu ani gatewaya. Brak autoryzowanego kanału
+   transportowego w aktualnym zakresie.
+3. Nierozwiązana decyzja operatora: zatrzymać temat albo osobno autoryzować
+   ocenę jednego wariantu spoza zakresu (np. wspierany companion, pack, własny
+   target lub przyszła funkcja first-party).

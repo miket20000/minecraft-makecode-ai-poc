@@ -37,5 +37,14 @@ the minimal CORS preflight required by the PoC.
 
 ## Result
 
-See `REPORT.md`. Results are recorded per immutable Git commit and earlier
-failures remain part of the evidence.
+`NO-GO`: no tested in-scope mechanism provided
+`Minecraft Education -> API -> Minecraft Education`. See `REPORT.md` for the
+per-environment results and observed limitations. Results are recorded per
+immutable Git commit and earlier failures remain part of the evidence.
+
+Candidate commits:
+
+- `88f5a93`: local Identity control;
+- `0135609`: direct `fetch()` / `pxt.Util.requestAsync()` probe;
+- `47c67da` and cache-distinct `8ca7925`: simulator-side shim probe;
+- `017d4ee`: Editor Extension manifest probe.

@@ -6,8 +6,9 @@ Empirycznie ustalić, czy Minecraft Education 1.26.3200.0 może przez MakeCode
 2.1.27 komunikować się z zewnętrznym API i odebrać wynik w uruchomionym
 świecie. Test używa wyłącznie lokalnego Echo API; bez modeli AI, sekretów,
 modeli AI, sekretów ani własnego targetu PXT. Pierwszy etap MakeCode pozostaje
-zamknięty jako `NO-GO`; kontynuacja bada natywne `/connect`/Companion oraz
-minimalny Behavior Pack.
+zamknięty jako `NO-GO`; kontynuacja bada natywne `/connect`/Companion.
+Operator zawęził bieżący etap: zakończyć po Companion i nie rozpoczynać testów
+Behavior Pack.
 
 ## Stan
 
@@ -67,9 +68,13 @@ minimalny Behavior Pack.
   `-2147418107` i tekstem `Encrypted session required`; w świecie nie pojawił
   się efekt polecenia. `PASS-CONNECT-LOCAL` nie został osiągnięty.
 - Ustawienie świata ma `Websockets Enabled`; `Require Encrypted Websockets`
-  jest w interfejsie wyszarzone. Połączenie plaintext wymagałoby wyłączenia
-  zabezpieczenia albo implementacji prywatnej sesji kryptograficznej. Tego
-  wariantu nie rozszerzamy: `NO-GO-COMPANION` dla praktycznego minimalnego PoC.
+  jest w interfejsie wyszarzone. Połączenie plaintext wymaga implementacji
+  sesji kryptograficznej.
+- Operator rozszerzył zakres o szyfrowanie. Kandydat `d6605a3` wykonał P-384
+  ECDH i ustanowił AES-256-CFB8. Zaszyfrowane polecenie zwrotne wyświetliło
+  `CONNECT_ENCRYPTED_OK` w świecie, ale pierwsza ramka Minecraft -> Companion
+  nie została poprawnie odszyfrowana (`UnicodeDecodeError`). To częściowy
+  `PASS` wyjścia Companion -> Minecraft i nadal `FAIL` pełnego round-trip.
 
 ## Ograniczenia i decyzje
 
@@ -90,9 +95,9 @@ minimalny Behavior Pack.
 
 ## START HERE
 
-1. Zachowaj `NO-GO-COMPANION` oraz evidence błędu `Encrypted session required`;
-   nie odtwarzaj protokołu szyfrowania Code Connection.
-2. Niezależnie wykonaj osobnego kandydata minimalnego Behavior Pack i sprawdź
-   go w nowym świecie, bez modyfikowania świata użytego dla MakeCode.
-3. Następnie sprawdź Script API, wspierany direct HTTP i ewentualne współżycie
-   Pack z ustanowionym ręcznie `/connect`.
+1. Kontynuuj tylko szyfrowany Companion: ustal, czy pierwsza ramka zwrotna po
+   włączeniu AES-256-CFB8 jest plaintextem albo wymaga innego stanu odbiorczego.
+2. Uzyskaj pełne `Minecraft -> Companion -> Minecraft`, następnie dołącz Echo
+   API i powtórz pełny round-trip w rzeczywistym świecie.
+3. Po etapie Companion zaktualizuj raport, posprzątaj procesy i zatrzymaj się.
+   Nie rozpoczynaj Behavior Pack.

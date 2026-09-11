@@ -1,0 +1,9 @@
+2026-09-11T06:40:53.900728Z websocket_connected local=127.0.0.1:19131 remote=127.0.0.1:64167 path=/ws subprotocol=com.microsoft.minecraft.wsencrypt
+2026-09-11T06:40:53.902480Z sent purpose=commandRequest command=/getlocalplayername encrypted=false
+2026-09-11T06:40:54.101249Z received purpose=commandResponse statusCode=0 localplayername_length=8 encrypted=false
+2026-09-11T06:40:54.108389Z sent purpose=commandRequest command=/enableencryption public_key=[REDACTED] salt=[REDACTED] encrypted=false
+2026-09-11T06:40:54.193425Z received purpose=ws:encrypt body_shape={publicKey:string_length_160} encrypted=false
+2026-09-11T06:40:54.196468Z encryption_established curve=P-384 cipher=AES-256-CFB8
+2026-09-11T06:40:54.198019Z sent purpose=subscribe eventName=PlayerMessage encrypted=true
+2026-09-11T06:40:54.199219Z sent purpose=commandRequest command=/say CONNECT_ENCRYPTED_OK encrypted=true
+2026-09-11T06:40:54.200292Z session_error error_type=UnicodeDecodeError message="utf-8 decode failed at byte 1"

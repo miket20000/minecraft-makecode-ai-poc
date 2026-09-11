@@ -39,3 +39,11 @@ on `mt` with WinApp CLI.
 - `connect-settings-encryption.png` — General Settings after stopping the
   listener: WebSockets are enabled and the `Require Encrypted Websockets`
   control is unavailable (greyed out), so it was not changed for the PoC.
+- `connect-encrypted-d6605a3-input.png` and
+  `connect-encrypted-d6605a3-result.png` — exact `/connect` command and visible
+  `CONNECT_ENCRYPTED_OK` emitted by the encrypted command from candidate
+  `d6605a3`.
+- `connect-encrypted-d6605a3.log` — sanitized protocol evidence: P-384 key
+  agreement completed, AES-256-CFB8 outbound traffic reached Minecraft, but
+  the first inbound frame failed UTF-8 decoding after decryption. Ephemeral
+  public-key and salt values are deliberately not retained.

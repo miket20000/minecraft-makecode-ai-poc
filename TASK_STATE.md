@@ -47,6 +47,16 @@ minimalny Behavior Pack.
 - Port `19131` był wolny; Windows Python 3.13.14 ma już bibliotekę
   `websockets` 17.0. Dodano minimalny handshake/message probe, bez logiki
   poleceń zwrotnych.
+- Kandydat `0828516` przyjął handshake dla dokładnego
+  `/connect ws://127.0.0.1:19131` (ścieżka `//`) i wariantu historycznej
+  składni `/connect 127.0.0.1:19131/ws` (ścieżka `/ws`). Oba połączenia były
+  inicjowane z loopback Minecrafta, ale klient zamykał je po około 0,1 s bez
+  wiadomości i wyświetlał `Could not connect to server`: handshake `PASS`,
+  połączenie aplikacyjne `FAIL`.
+- Biblioteka zgłosiła `invalid status code`; historyczna implementacja
+  `mcwss` deklaruje subprotokół `com.microsoft.minecraft.wsencrypt`. Następny
+  kandydat ma negocjować tylko ten subprotokół i zarejestrować pierwszą
+  wiadomość, bez implementowania pełnego szyfrowania.
 
 ## Ograniczenia i decyzje
 
@@ -67,11 +77,11 @@ minimalny Behavior Pack.
 
 ## START HERE
 
-1. Uruchom `companion_ws_probe.py` na Windows loopback `127.0.0.1:19131` i
-   potwierdź listener.
-2. W Minecraft wykonaj dokładnie `/connect ws://127.0.0.1:19131`, zachowując
-   wynik gry, handshake i pierwsze wiadomości.
-3. Jeśli handshake działa, rozpoznaj tylko minimalny protokół potrzebny do
-   eventu i widocznej odpowiedzi. Następnie wykonaj Echo round-trip.
+1. Zatrzymaj proces kandydata `0828516` na `127.0.0.1:19131`.
+2. Dodaj osobnego kandydata negocjującego wyłącznie
+   `com.microsoft.minecraft.wsencrypt`, uruchom go i ponów dokładny
+   `/connect 127.0.0.1:19131/ws`.
+3. Jeśli klient wyśle wiadomość tożsamości/handshake, oceń minimalny koszt
+   protokołu. Nie reimplementuj pełnego Code Connection.
 4. Niezależnie od Companion wykonaj osobnego kandydata minimalnego Behavior
    Pack oraz sprawdź Script API i możliwy transport.

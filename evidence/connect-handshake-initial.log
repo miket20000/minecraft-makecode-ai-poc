@@ -1,0 +1,7 @@
+{"timestamp": "2026-09-11T05:32:36.396997+00:00", "event": "listening", "host": "127.0.0.1", "port": 19131}
+{"timestamp": "2026-09-11T05:34:04.474555+00:00", "event": "websocket_connected", "local": ["127.0.0.1", 19131], "remote": ["127.0.0.1", 56015], "path": "//", "origin": null, "user_agent": null, "websocket_version": "13"}
+{"timestamp": "2026-09-11T05:34:04.632825+00:00", "event": "websocket_closed", "messages": 0}
+ERROR websockets.exceptions.ConnectionClosedError: sent 1002 (protocol error) invalid status code; no close frame received
+{"timestamp": "2026-09-11T05:35:34.437294+00:00", "event": "websocket_connected", "local": ["127.0.0.1", 19131], "remote": ["127.0.0.1", 55484], "path": "/ws", "origin": null, "user_agent": null, "websocket_version": "13"}
+{"timestamp": "2026-09-11T05:35:34.529912+00:00", "event": "websocket_closed", "messages": 0}
+ERROR websockets.exceptions.ConnectionClosedError: sent 1002 (protocol error) invalid status code; no close frame received

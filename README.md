@@ -48,3 +48,10 @@ Candidate commits:
 - `0135609`: direct `fetch()` / `pxt.Util.requestAsync()` probe;
 - `47c67da` and cache-distinct `8ca7925`: simulator-side shim probe;
 - `017d4ee`: Editor Extension manifest probe.
+
+## Companion `/connect` probe
+
+The continuation PoC first tests Minecraft Education's native `/connect`
+(`wsserver`) command against `companion_ws_probe.py`. The probe listens only on
+the selected local address, records the WebSocket handshake and messages, and
+does not issue Minecraft commands.

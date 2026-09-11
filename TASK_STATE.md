@@ -5,7 +5,9 @@
 Empirycznie ustalić, czy Minecraft Education 1.26.3200.0 może przez MakeCode
 2.1.27 komunikować się z zewnętrznym API i odebrać wynik w uruchomionym
 świecie. Test używa wyłącznie lokalnego Echo API; bez modeli AI, sekretów,
-pakietów Minecraft i własnego targetu PXT.
+modeli AI, sekretów ani własnego targetu PXT. Pierwszy etap MakeCode pozostaje
+zamknięty jako `NO-GO`; kontynuacja bada natywne `/connect`/Companion oraz
+minimalny Behavior Pack.
 
 ## Stan
 
@@ -39,6 +41,12 @@ pakietów Minecraft i własnego targetu PXT.
   załadował iframe: Editor Extension `FAIL`.
 - Brak działającego przepływu `Minecraft -> API -> Minecraft`; `PASS-A` i
   `PASS-B` nie zostały osiągnięte.
+- Kontynuacja 2026-09-11: w rzeczywistym świecie obie komendy `/help connect`
+  i `/help wsserver` są rozpoznawane. Gra opisuje `wsserver (also connect)` i
+  składnię `/connect <serverUri: text>`: dostępność `AVAILABLE`.
+- Port `19131` był wolny; Windows Python 3.13.14 ma już bibliotekę
+  `websockets` 17.0. Dodano minimalny handshake/message probe, bez logiki
+  poleceń zwrotnych.
 
 ## Ograniczenia i decyzje
 
@@ -59,9 +67,11 @@ pakietów Minecraft i własnego targetu PXT.
 
 ## START HERE
 
-1. Przeczytaj `REPORT.md`; zawiera końcową macierz wyników i ograniczenia.
-2. Nie rozpoczynaj integracji modelu ani gatewaya. Brak autoryzowanego kanału
-   transportowego w aktualnym zakresie.
-3. Nierozwiązana decyzja operatora: zatrzymać temat albo osobno autoryzować
-   ocenę jednego wariantu spoza zakresu (np. wspierany companion, pack, własny
-   target lub przyszła funkcja first-party).
+1. Uruchom `companion_ws_probe.py` na Windows loopback `127.0.0.1:19131` i
+   potwierdź listener.
+2. W Minecraft wykonaj dokładnie `/connect ws://127.0.0.1:19131`, zachowując
+   wynik gry, handshake i pierwsze wiadomości.
+3. Jeśli handshake działa, rozpoznaj tylko minimalny protokół potrzebny do
+   eventu i widocznej odpowiedzi. Następnie wykonaj Echo round-trip.
+4. Niezależnie od Companion wykonaj osobnego kandydata minimalnego Behavior
+   Pack oraz sprawdź Script API i możliwy transport.

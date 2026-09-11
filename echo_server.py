@@ -3,6 +3,7 @@
 
 import argparse
 import json
+import sys
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
@@ -72,7 +73,10 @@ class EchoHandler(BaseHTTPRequestHandler):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--origin", required=True)
+    parser.add_argument("--log-path")
     args = parser.parse_args()
+    if args.log_path:
+        sys.stdout = open(args.log_path, "a", encoding="utf-8", buffering=1)
     EchoHandler.allowed_origin = args.origin
     server = ThreadingHTTPServer(("127.0.0.1", 8765), EchoHandler)
     print(f"LISTEN 127.0.0.1:8765 origin={args.origin}", flush=True)

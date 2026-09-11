@@ -8,6 +8,7 @@ import hashlib
 import json
 import os
 import sys
+import urllib.request
 import uuid
 from datetime import datetime, timezone
 
@@ -128,7 +129,26 @@ def event_message(value):
     )
 
 
-async def handle(connection):
+def call_echo(url, text):
+    payload = json.dumps({"text": text}).encode("utf-8")
+    request = urllib.request.Request(
+        url,
+        data=payload,
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(request, timeout=3) as response:
+        body = response.read(4097)
+        if response.status != 200 or len(body) > 4096:
+            raise RuntimeError(f"unexpected Echo response: HTTP {response.status}")
+    value = json.loads(body.decode("utf-8"))
+    result = value.get("text") if isinstance(value, dict) else None
+    if not isinstance(result, str):
+        raise RuntimeError("Echo response does not contain text")
+    return result
+
+
+async def handle(connection, echo_url):
     emit(
         "websocket_connected",
         local=list(connection.local_address),
@@ -190,13 +210,37 @@ async def handle(connection):
 
         while True:
             message = await receive_json(connection, decryptor)
-            if event_message(message) == "companion hello":
+            player_message = event_message(message)
+            if player_message == "companion hello":
                 emit("trigger", text="companion hello")
                 await send_json(
                     connection,
                     command_packet("/say hello"),
                     encryptor,
                 )
+            elif player_message == "companion echo hello":
+                emit("trigger", text="companion echo hello")
+                try:
+                    response_text = await asyncio.to_thread(
+                        call_echo, echo_url, "hello"
+                    )
+                    emit("echo_response", status=200, text_length=len(response_text))
+                    await send_json(
+                        connection,
+                        command_packet(f"/say {response_text}"),
+                        encryptor,
+                    )
+                except Exception as error:
+                    emit(
+                        "echo_error",
+                        error_type=type(error).__name__,
+                        message=str(error),
+                    )
+                    await send_json(
+                        connection,
+                        command_packet("/say AI_ERROR:ECHO"),
+                        encryptor,
+                    )
     except ConnectionClosed as error:
         emit("websocket_closed", code=error.code, reason=error.reason)
     except Exception as error:
@@ -209,11 +253,12 @@ async def main():
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=19131)
     parser.add_argument("--log-path")
+    parser.add_argument("--echo-url", default="http://127.0.0.1:8765/echo")
     args = parser.parse_args()
     if args.log_path:
         sys.stdout = open(args.log_path, "a", encoding="utf-8", buffering=1)
     async with serve(
-        handle,
+        lambda connection: handle(connection, args.echo_url),
         args.host,
         args.port,
         subprotocols=[MINECRAFT_SUBPROTOCOL],

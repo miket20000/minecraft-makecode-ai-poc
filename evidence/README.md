@@ -30,3 +30,12 @@ on `mt` with WinApp CLI.
   candidate `0a50cac`.
 - `connect-subprotocol.log` — WebSocket v13 handshake with offered and selected
   `com.microsoft.minecraft.wsencrypt`; the connection remained active.
+- `connect-roundtrip-plaintext-input.png` and
+  `connect-roundtrip-plaintext-result.png` — exact connection command and the
+  established socket without a visible `CONNECT_LOCAL_OK` result.
+- `connect-roundtrip-plaintext.log` — candidate `7e0b4f6` sent the smallest
+  plaintext `PlayerMessage` subscription and `say CONNECT_LOCAL_OK`; Minecraft
+  returned status `-2147418107`, `Encrypted session required`.
+- `connect-settings-encryption.png` — General Settings after stopping the
+  listener: WebSockets are enabled and the `Require Encrypted Websockets`
+  control is unavailable (greyed out), so it was not changed for the PoC.

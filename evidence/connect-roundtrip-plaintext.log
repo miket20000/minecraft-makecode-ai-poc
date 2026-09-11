@@ -1,0 +1,5 @@
+{"timestamp": "2026-09-11T05:42:03.941220+00:00", "event": "listening", "host": "127.0.0.1", "port": 19131}
+{"timestamp": "2026-09-11T05:42:38.489979+00:00", "event": "websocket_connected", "local": ["127.0.0.1", 19131], "remote": ["127.0.0.1", 54850], "path": "/ws", "selected_subprotocol": "com.microsoft.minecraft.wsencrypt"}
+{"timestamp": "2026-09-11T05:42:38.491382+00:00", "event": "sent", "purpose": "subscribe", "request_id": "50f8a9de-a61e-4afd-8a55-b1f880fc6dfa", "body": {"eventName": "PlayerMessage"}}
+{"timestamp": "2026-09-11T05:42:38.492538+00:00", "event": "sent", "purpose": "commandRequest", "request_id": "ec120393-e256-4d57-a19c-425a36fc2b1a", "body": {"version": 1, "commandLine": "say CONNECT_LOCAL_OK", "origin": {"type": "player"}}}
+{"timestamp": "2026-09-11T05:42:38.616564+00:00", "event": "received", "number": 1, "kind": "text", "payload": "{\"body\":{\"statusCode\":-2147418107,\"statusMessage\":\"Encrypted session required\"},\"header\":{\"messagePurpose\":\"error\",\"requestId\":\"50f8a9de-a61e-4afd-8a55-b1f880fc6dfa\",\"version\":17104896}}\n"}

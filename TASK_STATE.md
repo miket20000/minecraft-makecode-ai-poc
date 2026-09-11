@@ -12,7 +12,7 @@ minimalny Behavior Pack.
 ## Stan
 
 - Publiczne repozytorium: `miket20000/minecraft-makecode-ai-poc`.
-- Wynik końcowy: `NO-GO` w zatwierdzonym zakresie.
+- Wynik etapu MakeCode: `NO-GO`; rozszerzony PoC Companion/Pack jest w toku.
 - Badany host: `mt`; Minecraft Education 1.26.3200.0, MakeCode target 2.1.27,
   PXT 12.1.17.
 - Kandydat 1 (Identity), commit `88f5a93`, zaimportował się do nowego projektu
@@ -62,8 +62,14 @@ minimalny Behavior Pack.
   `/connect 127.0.0.1:19131/ws` Minecraft wyświetlił
   `Connection established to server`, a socket pozostał otwarty. Klient nie
   wysłał spontanicznej wiadomości: handshake i trwałe połączenie `PASS`.
-- Następny kandydat ma wysłać wyłącznie subskrypcję `PlayerMessage` i pojedyncze
-  polecenie `say`, a następnie odpowiedzieć na jedną wiadomość czatu.
+- Kandydat `7e0b4f6` wysłał przez utrzymany socket minimalną subskrypcję
+  `PlayerMessage` oraz `say CONNECT_LOCAL_OK`. Minecraft odpowiedział kodem
+  `-2147418107` i tekstem `Encrypted session required`; w świecie nie pojawił
+  się efekt polecenia. `PASS-CONNECT-LOCAL` nie został osiągnięty.
+- Ustawienie świata ma `Websockets Enabled`; `Require Encrypted Websockets`
+  jest w interfejsie wyszarzone. Połączenie plaintext wymagałoby wyłączenia
+  zabezpieczenia albo implementacji prywatnej sesji kryptograficznej. Tego
+  wariantu nie rozszerzamy: `NO-GO-COMPANION` dla praktycznego minimalnego PoC.
 
 ## Ograniczenia i decyzje
 
@@ -84,13 +90,9 @@ minimalny Behavior Pack.
 
 ## START HERE
 
-1. Uruchom `companion_connect_local.py` na `127.0.0.1:19131` i połącz Minecraft
-   przez `/connect 127.0.0.1:19131/ws`.
-2. Potwierdź widoczne `CONNECT_LOCAL_OK`, następnie wyślij z Minecraft
-   dokładnie `companion hello`;
-   odczytaj event i zwróć widoczne `hello`, aby rozstrzygnąć
-   `PASS-CONNECT-LOCAL`.
-3. Jeśli zwykły JSON wymaga pełnego szyfrowania, zakończ ten wariant jako
-   wymagający znacznej implementacji zamiast odtwarzać Code Connection.
-4. Niezależnie od Companion wykonaj osobnego kandydata minimalnego Behavior
-   Pack oraz sprawdź Script API i możliwy transport.
+1. Zachowaj `NO-GO-COMPANION` oraz evidence błędu `Encrypted session required`;
+   nie odtwarzaj protokołu szyfrowania Code Connection.
+2. Niezależnie wykonaj osobnego kandydata minimalnego Behavior Pack i sprawdź
+   go w nowym świecie, bez modyfikowania świata użytego dla MakeCode.
+3. Następnie sprawdź Script API, wspierany direct HTTP i ewentualne współżycie
+   Pack z ustanowionym ręcznie `/connect`.

@@ -69,6 +69,12 @@ message and the minimum remaining protocol boundary.
 the exact player chat message `companion hello` to `say hello`. This is the
 smallest event-to-command check before adding Echo HTTP.
 
+`companion_connect_encrypted.py` is the operator-authorized encrypted
+candidate. It implements only the required P-384 ECDH exchange and the
+AES-256-CFB8 session used by `com.microsoft.minecraft.wsencrypt`, then repeats
+the same one-event/one-command round-trip. Its two pinned Python dependencies
+are listed in `requirements-companion.txt`.
+
 ## Behavior Pack control
 
 `behavior_pack` is the minimal data-only load control. After the pack is

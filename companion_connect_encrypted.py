@@ -79,17 +79,25 @@ async def receive_json(connection, decryptor=None):
     if encrypted:
         raw = decryptor.update(raw)
     value = json.loads(raw.decode("utf-8"))
+    body = value.get("body", {})
+    body_shape = {}
+    if isinstance(body, dict):
+        body_shape = {
+            key: len(item) if isinstance(item, str) else type(item).__name__
+            for key, item in body.items()
+        }
     emit(
         "received",
         purpose=value.get("header", {}).get("messagePurpose"),
         request_id=value.get("header", {}).get("requestId"),
         encrypted=encrypted,
-        status_code=value.get("body", {}).get("statusCode"),
-        status_message=value.get("body", {}).get("statusMessage"),
+        status_code=body.get("statusCode") if isinstance(body, dict) else None,
+        status_message=body.get("statusMessage") if isinstance(body, dict) else None,
         event_name=(
             value.get("header", {}).get("eventName")
             or value.get("body", {}).get("eventName")
         ),
+        body_shape=body_shape,
     )
     return value
 

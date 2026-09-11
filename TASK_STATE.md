@@ -77,11 +77,10 @@ minimalny Behavior Pack.
 
 ## START HERE
 
-1. Zatrzymaj proces kandydata `0828516` na `127.0.0.1:19131`.
-2. Dodaj osobnego kandydata negocjującego wyłącznie
-   `com.microsoft.minecraft.wsencrypt`, uruchom go i ponów dokładny
+1. Uruchom `companion_ws_subprotocol.py` negocjujący wyłącznie
+   `com.microsoft.minecraft.wsencrypt` na `127.0.0.1:19131` i ponów dokładny
    `/connect 127.0.0.1:19131/ws`.
-3. Jeśli klient wyśle wiadomość tożsamości/handshake, oceń minimalny koszt
+2. Jeśli klient wyśle wiadomość tożsamości/handshake, oceń minimalny koszt
    protokołu. Nie reimplementuj pełnego Code Connection.
-4. Niezależnie od Companion wykonaj osobnego kandydata minimalnego Behavior
+3. Niezależnie od Companion wykonaj osobnego kandydata minimalnego Behavior
    Pack oraz sprawdź Script API i możliwy transport.

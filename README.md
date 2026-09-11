@@ -55,3 +55,9 @@ The continuation PoC first tests Minecraft Education's native `/connect`
 (`wsserver`) command against `companion_ws_probe.py`. The probe listens only on
 the selected local address, records the WebSocket handshake and messages, and
 does not issue Minecraft commands.
+
+`companion_ws_subprotocol.py` is a separate candidate that additionally
+negotiates the single subprotocol offered by Minecraft Education:
+`com.microsoft.minecraft.wsencrypt`. It still performs no encryption exchange
+or command processing; its purpose is to identify the first application
+message and the minimum remaining protocol boundary.

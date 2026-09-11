@@ -1,0 +1,14 @@
+host=student-l-wm66 minecraft=1.26.4501.0 companion_commit=66c22d9
+preflight port_19131=free port_8765=free python=3.13.3 cryptography=45.0.7 websockets=17.0
+echo_contract request={text:hello} response={text:hello} status=200
+2026-09-11T07:12:17.248420Z websocket_connected local=127.0.0.1:19131 remote=127.0.0.1:51606 path=/ws subprotocol=com.microsoft.minecraft.wsencrypt
+2026-09-11T07:12:17.482908Z encryption_established curve=P-384 cipher=AES-256-CFB8
+2026-09-11T07:12:17.483245Z sent purpose=subscribe eventName=PlayerMessage encrypted=true
+2026-09-11T07:12:59.595313Z received purpose=event eventName=PlayerMessage encrypted=true body_shape={message:20,receiver:0,sender:8,type:4}
+2026-09-11T07:12:59.595466Z trigger text="companion echo hello"
+2026-09-11T07:12:59.750848Z echo_response status=200 text_length=5
+echo_log POST path=/echo origin=- status=200
+2026-09-11T07:12:59.751263Z sent purpose=commandRequest command="/say hello" encrypted=true
+2026-09-11T07:12:59.794765Z received purpose=event eventName=PlayerMessage encrypted=true body_shape={message:18,receiver:0,sender:10,type:3}
+2026-09-11T07:12:59.826705Z received purpose=commandResponse encrypted=true statusCode=0 body_shape={message:5,statusCode:int}
+result=PASS-COMPANION-CONNECT

@@ -4,8 +4,8 @@
 
 Empirycznie ustalić, czy Minecraft Education 1.26.3200.0 może przez MakeCode
 2.1.27 komunikować się z zewnętrznym API i odebrać wynik w uruchomionym
-świecie. Test używa wyłącznie lokalnego Echo API; bez modeli AI, sekretów,
-modeli AI, sekretów ani własnego targetu PXT. Pierwszy etap MakeCode pozostaje
+świecie. Test używa wyłącznie lokalnego Echo API; bez modeli AI, sekretów ani
+własnego targetu PXT. Pierwszy etap MakeCode pozostaje
 zamknięty jako `NO-GO`; kontynuacja bada natywne `/connect`/Companion.
 Operator zawęził bieżący etap: zakończyć po Companion i nie rozpoczynać testów
 Behavior Pack.
@@ -13,8 +13,10 @@ Behavior Pack.
 ## Stan
 
 - Publiczne repozytorium: `miket20000/minecraft-makecode-ai-poc`.
-- Wynik etapu MakeCode: `NO-GO`; rozszerzony PoC Companion/Pack jest w toku.
-- Badany host: `mt`; Minecraft Education 1.26.3200.0, MakeCode target 2.1.27,
+- Wynik etapu MakeCode: `NO-GO`. Wynik etapu Companion:
+  `PASS-COMPANION-CONNECT`.
+- Początkowy host: `mt`, Minecraft Education 1.26.3200.0. Końcowy host:
+  `student-l-wm66`, Minecraft Education 1.26.4501.0. MakeCode target 2.1.27,
   PXT 12.1.17.
 - Kandydat 1 (Identity), commit `88f5a93`, zaimportował się do nowego projektu
   `AI transport PoC`; kategoria `AI` i blok `AI zapytaj` były widoczne.
@@ -84,6 +86,21 @@ Behavior Pack.
   odszyfrowywane. Wiadomość gracza dotarła jako `body.message`, nie historyczne
   `body.properties.Message`; dlatego parser nie wysłał `hello`: pełny
   round-trip tego SHA to `FAIL`, przy działającym szyfrowanym transporcie.
+- Kandydat `fca927a` obsłużył aktualne `body.message`. Zaszyfrowany event
+  `companion hello` wywołał zaszyfrowane `/say hello`; Minecraft zwrócił event
+  wyniku oraz `commandResponse statusCode=0`: `PASS-CONNECT-LOCAL`.
+- Końcowy kandydat `66c22d9` dodał tylko minimalne `POST /echo`. Niezależny
+  kontrakt zwrócił `hello`. Następnie event `companion echo hello` z realnego
+  świata spowodował drugi `POST /echo` 200, zaszyfrowane `/say hello`, event
+  wyniku gry i `commandResponse statusCode=0`: `PASS-COMPANION-CONNECT`.
+- Behavior Pack, Pack HTTP i Pack + Companion nie zostały uruchomione zgodnie
+  z końcową decyzją operatora. Istniejący szkielet packa pozostał niezmieniony
+  i nie jest evidence działania.
+- Cleanup potwierdzony: na `student-l-wm66` i `mt` porty 19131/8765 są
+  zamknięte, dokładne katalogi runtime usunięte, a własne helpery nie pozostały.
+  Na `student-l-wm66` most nie pozostawił zadań `GP-WinApp-*`; helpery z hopa
+  `gp:/tmp` także usunięto. Minecraft na `student-l-wm66` pozostawiono
+  uruchomiony z załadowanym światem, bez rozpoczynania Behavior Pack.
 
 ## Ograniczenia i decyzje
 
@@ -97,16 +114,19 @@ Behavior Pack.
 
 ## Środowisko i źródła prawdy
 
-- Minecraft Education: 1.26.3200.0 na `mt`.
+- Minecraft Education: 1.26.3200.0 na `mt`; 1.26.4501.0 na
+  `student-l-wm66`.
 - Minecraft MakeCode target: 2.1.27; PXT: 12.1.17.
-- Sterowanie UI: WinApp CLI na `mt` przez SSH.
+- Sterowanie UI: WinApp CLI na `mt`; na `student-l-wm66` chroniony most WinApp
+  v0.6.0 w aktywnej sesji, dostęp przez reverse SSH na `gp`.
 - Repozytorium i zweryfikowane zachowanie runtime są źródłem prawdy o PoC.
 
 ## START HERE
 
-1. Kontynuuj tylko szyfrowany Companion na `student-l-wm66`: odczytuj bieżący
-   event `PlayerMessage` także z `body.message`.
-2. Uzyskaj pełne `Minecraft -> Companion -> Minecraft`, następnie dołącz Echo
-   API i powtórz pełny round-trip w rzeczywistym świecie.
-3. Po etapie Companion zaktualizuj raport, posprzątaj procesy i zatrzymaj się.
-   Nie rozpoczynaj Behavior Pack.
+1. Przeczytaj `REPORT.md` i `evidence/README.md`; etap Companion jest zamknięty
+   jako `PASS-COMPANION-CONNECT`, a wcześniejszy MakeCode jako `NO-GO`.
+2. Nie rozpoczynaj Behavior Pack ani integracji modelu bez nowej decyzji
+   operatora.
+3. Jeżeli operator zatwierdzi kolejny etap, zacznij od minimalnego przepływu
+   `AI zapytaj -> Companion -> HTTPS GP AI Gateway -> jeden model testowy ->
+   ustrukturyzowana odpowiedź -> Minecraft`, bez rozszerzania infrastruktury.

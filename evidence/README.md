@@ -52,3 +52,17 @@ on `mt` with WinApp CLI.
   responses. The player message arrived in `body.message`, so the historical
   `body.properties.Message` parser did not trigger the return command. This is
   retained as `FAIL` for the full round-trip at that SHA.
+- `connect-local-fca927a.log` — encrypted player event -> Companion trigger ->
+  encrypted `/say hello` -> game event and successful command response on
+  `student-l-wm66`: `PASS-CONNECT-LOCAL`.
+- `connect-echo-66c22d9.log` — sanitized, correlated evidence for the complete
+  encrypted flow through `POST /echo`, including the independent Echo contract
+  check and Minecraft command response: `PASS-COMPANION-CONNECT`.
+
+On `student-l-wm66`, WinApp v0.6.0 executed in the protected active-session
+bridge. Its window-only screenshot of the Minecraft OGLES surface was entirely
+black, and Minecraft F2 created no image file. `--capture-screen` was not used
+because it can include other desktop applications; the full PASS is therefore
+supported by correlated protocol/API logs rather than a screenshot from that
+host. The earlier `d6605a3` screenshot from `mt` remains visual evidence that
+an encrypted Companion command renders in the real game.

@@ -1,0 +1,9 @@
+host=student-l-wm66 minecraft=1.26.4501.0 companion_commit=fca927a winapp=protected-active-session-bridge
+2026-09-11T07:05:30.785158Z encryption_established curve=P-384 cipher=AES-256-CFB8
+2026-09-11T07:05:30.785779Z sent purpose=subscribe eventName=PlayerMessage encrypted=true
+2026-09-11T07:06:03.233094Z received purpose=event eventName=PlayerMessage encrypted=true body_shape={message:15,receiver:0,sender:8,type:4}
+2026-09-11T07:06:03.233271Z trigger text="companion hello"
+2026-09-11T07:06:03.233742Z sent purpose=commandRequest command="/say hello" encrypted=true
+2026-09-11T07:06:03.324388Z received purpose=event eventName=PlayerMessage encrypted=true body_shape={message:18,receiver:0,sender:10,type:3}
+2026-09-11T07:06:03.355474Z received purpose=commandResponse encrypted=true statusCode=0 body_shape={message:5,statusCode:int}
+result=PASS-CONNECT-LOCAL

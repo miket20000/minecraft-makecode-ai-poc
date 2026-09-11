@@ -7,6 +7,7 @@ import base64
 import hashlib
 import json
 import os
+import sys
 import uuid
 from datetime import datetime, timezone
 
@@ -202,7 +203,10 @@ async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=19131)
+    parser.add_argument("--log-path")
     args = parser.parse_args()
+    if args.log_path:
+        sys.stdout = open(args.log_path, "a", encoding="utf-8", buffering=1)
     async with serve(
         handle,
         args.host,

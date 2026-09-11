@@ -61,12 +61,15 @@ async def send_json(connection, value, encryptor=None):
         await connection.send(data, text=True)
     else:
         await connection.send(data.decode("utf-8"))
+    command = value.get("body", {}).get("commandLine")
+    if command and command.startswith("/enableencryption "):
+        command = "/enableencryption [EPHEMERAL_VALUES_REDACTED]"
     emit(
         "sent",
         purpose=value["header"]["messagePurpose"],
         request_id=value["header"]["requestId"],
         encrypted=encrypted,
-        command=value.get("body", {}).get("commandLine"),
+        command=command,
         event_name=value.get("body", {}).get("eventName"),
     )
 
@@ -77,7 +80,13 @@ async def receive_json(connection, decryptor=None):
         raw = raw.encode("utf-8")
     encrypted = decryptor is not None
     if encrypted:
-        raw = decryptor.update(raw)
+        try:
+            value = json.loads(raw.decode("utf-8"))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            raw = decryptor.update(raw)
+        else:
+            emit("plaintext_frame_after_encryption", frame_length=len(raw))
+            encrypted = False
     value = json.loads(raw.decode("utf-8"))
     body = value.get("body", {})
     body_shape = {}

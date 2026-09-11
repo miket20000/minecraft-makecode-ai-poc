@@ -143,7 +143,11 @@ async def handle(connection):
         await send_json(connection, enable_request)
         enable_response = await receive_json(connection)
         body = enable_response.get("body", {})
-        if body.get("statusCode") != 0 or not body.get("publicKey"):
+        if (
+            enable_response.get("header", {}).get("messagePurpose") != "ws:encrypt"
+            or not body.get("publicKey")
+            or body.get("statusCode") not in (None, 0)
+        ):
             raise RuntimeError("enableencryption failed")
 
         client_key = serialization.load_der_public_key(

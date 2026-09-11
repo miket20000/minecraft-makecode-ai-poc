@@ -1,0 +1,17 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "AI Transport PoC - Function",
+    "description": "Minimal Behavior Pack load control; no external transport.",
+    "uuid": "1045e7d0-2ae4-4bbd-8886-bd2ce42931a1",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 20, 0]
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "b713809d-998c-4fbd-ae2e-d04825122565",
+      "version": [1, 0, 0]
+    }
+  ]
+}

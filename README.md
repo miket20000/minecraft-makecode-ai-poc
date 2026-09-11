@@ -5,7 +5,9 @@ Minecraft Education Code Builder call an external Echo API and use its
 response in the Minecraft world?
 
 The project deliberately contains no AI provider integration, credentials,
-Behavior Pack, Resource Pack, custom PXT target, or production gateway.
+Resource Pack, custom PXT target, or production gateway. The continuation adds
+only the minimal Behavior Pack candidates needed to test an alternative
+transport boundary.
 
 ## Candidate 1: Identity
 
@@ -66,3 +68,10 @@ message and the minimum remaining protocol boundary.
 `PlayerMessage` subscription and one `say CONNECT_LOCAL_OK` request, then maps
 the exact player chat message `companion hello` to `say hello`. This is the
 smallest event-to-command check before adding Echo HTTP.
+
+## Behavior Pack control
+
+`behavior_pack` is the minimal data-only load control. After the pack is
+enabled for an isolated test world, `/function pack_ok` must display
+`PACK_OK`. This validates only pack loading and command execution, not external
+transport.

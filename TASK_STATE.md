@@ -57,6 +57,13 @@ minimalny Behavior Pack.
   `mcwss` deklaruje subprotokół `com.microsoft.minecraft.wsencrypt`. Następny
   kandydat ma negocjować tylko ten subprotokół i zarejestrować pierwszą
   wiadomość, bez implementowania pełnego szyfrowania.
+- Kandydat `0a50cac` wynegocjował oferowany przez klienta subprotokół
+  `com.microsoft.minecraft.wsencrypt`. Dla dokładnego
+  `/connect 127.0.0.1:19131/ws` Minecraft wyświetlił
+  `Connection established to server`, a socket pozostał otwarty. Klient nie
+  wysłał spontanicznej wiadomości: handshake i trwałe połączenie `PASS`.
+- Następny kandydat ma wysłać wyłącznie subskrypcję `PlayerMessage` i pojedyncze
+  polecenie `say`, a następnie odpowiedzieć na jedną wiadomość czatu.
 
 ## Ograniczenia i decyzje
 
@@ -77,10 +84,12 @@ minimalny Behavior Pack.
 
 ## START HERE
 
-1. Uruchom `companion_ws_subprotocol.py` negocjujący wyłącznie
-   `com.microsoft.minecraft.wsencrypt` na `127.0.0.1:19131` i ponów dokładny
-   `/connect 127.0.0.1:19131/ws`.
-2. Jeśli klient wyśle wiadomość tożsamości/handshake, oceń minimalny koszt
-   protokołu. Nie reimplementuj pełnego Code Connection.
-3. Niezależnie od Companion wykonaj osobnego kandydata minimalnego Behavior
+1. Zatrzymaj kandydat `0a50cac` i dodaj osobny minimalny kandydat wysyłający
+   subskrypcję `PlayerMessage` oraz `say CONNECT_LOCAL_OK` zwykłym JSON-em.
+2. Po ponownym `/connect` wyślij z Minecraft dokładnie `companion hello`;
+   odczytaj event i zwróć widoczne `hello`, aby rozstrzygnąć
+   `PASS-CONNECT-LOCAL`.
+3. Jeśli zwykły JSON wymaga pełnego szyfrowania, zakończ ten wariant jako
+   wymagający znacznej implementacji zamiast odtwarzać Code Connection.
+4. Niezależnie od Companion wykonaj osobnego kandydata minimalnego Behavior
    Pack oraz sprawdź Script API i możliwy transport.

@@ -1,0 +1,2 @@
+{"timestamp": "2026-09-11T05:39:00.830120+00:00", "event": "listening", "host": "127.0.0.1", "port": 19131, "subprotocol": "com.microsoft.minecraft.wsencrypt"}
+{"timestamp": "2026-09-11T05:39:34.887306+00:00", "event": "websocket_connected", "local": ["127.0.0.1", 19131], "remote": ["127.0.0.1", 57049], "path": "/ws", "offered_subprotocols": "com.microsoft.minecraft.wsencrypt", "selected_subprotocol": "com.microsoft.minecraft.wsencrypt", "websocket_version": "13"}

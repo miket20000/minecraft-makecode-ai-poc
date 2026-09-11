@@ -25,3 +25,8 @@ on `mt` with WinApp CLI.
   `/connect 127.0.0.1:19131/ws` and the resulting in-game connection error.
 - `connect-handshake-initial.log` — server-side loopback handshake evidence for
   candidate `0828516`; no application message arrived.
+- `connect-subprotocol-input.png` and `connect-subprotocol-result.png` — exact
+  `/connect 127.0.0.1:19131/ws` and in-game `Connection established` for
+  candidate `0a50cac`.
+- `connect-subprotocol.log` — WebSocket v13 handshake with offered and selected
+  `com.microsoft.minecraft.wsencrypt`; the connection remained active.

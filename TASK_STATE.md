@@ -84,9 +84,10 @@ minimalny Behavior Pack.
 
 ## START HERE
 
-1. Zatrzymaj kandydat `0a50cac` i dodaj osobny minimalny kandydat wysyłający
-   subskrypcję `PlayerMessage` oraz `say CONNECT_LOCAL_OK` zwykłym JSON-em.
-2. Po ponownym `/connect` wyślij z Minecraft dokładnie `companion hello`;
+1. Uruchom `companion_connect_local.py` na `127.0.0.1:19131` i połącz Minecraft
+   przez `/connect 127.0.0.1:19131/ws`.
+2. Potwierdź widoczne `CONNECT_LOCAL_OK`, następnie wyślij z Minecraft
+   dokładnie `companion hello`;
    odczytaj event i zwróć widoczne `hello`, aby rozstrzygnąć
    `PASS-CONNECT-LOCAL`.
 3. Jeśli zwykły JSON wymaga pełnego szyfrowania, zakończ ten wariant jako

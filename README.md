@@ -61,3 +61,8 @@ negotiates the single subprotocol offered by Minecraft Education:
 `com.microsoft.minecraft.wsencrypt`. It still performs no encryption exchange
 or command processing; its purpose is to identify the first application
 message and the minimum remaining protocol boundary.
+
+`companion_connect_local.py` is the next immutable candidate. It sends one
+`PlayerMessage` subscription and one `say CONNECT_LOCAL_OK` request, then maps
+the exact player chat message `companion hello` to `say hello`. This is the
+smallest event-to-command check before adding Echo HTTP.

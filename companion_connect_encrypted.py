@@ -120,7 +120,12 @@ def event_message(value):
     event_name = value.get("header", {}).get("eventName") or body.get("eventName")
     if event_name != "PlayerMessage":
         return None
-    return properties.get("Message") or properties.get("message")
+    return (
+        properties.get("Message")
+        or properties.get("message")
+        or body.get("Message")
+        or body.get("message")
+    )
 
 
 async def handle(connection):

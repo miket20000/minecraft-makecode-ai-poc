@@ -1,0 +1,13 @@
+host=student-l-wm66 minecraft_process=Minecraft.Windows companion_commit=5a87569
+2026-09-11T07:01:21.756514Z websocket_connected local=127.0.0.1:19131 remote=127.0.0.1:51563 path=/ws subprotocol=com.microsoft.minecraft.wsencrypt
+2026-09-11T07:01:22.127543Z received purpose=commandResponse command=/getlocalplayername statusCode=0
+2026-09-11T07:01:22.233404Z received purpose=ws:encrypt body_shape={publicKey:string_length_160}
+2026-09-11T07:01:22.238785Z encryption_established curve=P-384 cipher=AES-256-CFB8
+2026-09-11T07:01:22.239685Z sent purpose=subscribe eventName=PlayerMessage encrypted=true
+2026-09-11T07:01:22.239981Z sent purpose=commandRequest command=/say CONNECT_ENCRYPTED_OK encrypted=true
+2026-09-11T07:01:22.240128Z plaintext_frame_after_encryption frame_length=302
+2026-09-11T07:01:22.240354Z received purpose=commandResponse encrypted=true statusCode=0
+2026-09-11T07:01:22.739108Z received purpose=event eventName=PlayerMessage encrypted=true body_shape={message:33,receiver:0,sender:10,type:3}
+2026-09-11T07:01:22.739328Z received purpose=commandResponse encrypted=true statusCode=0 body_shape={message:20,statusCode:int}
+2026-09-11T07:02:58.754154Z received purpose=event eventName=PlayerMessage encrypted=true body_shape={message:15,receiver:0,sender:8,type:4}
+result=FAIL_FULL_ROUND_TRIP reason="current event parser looked only under body.properties; current client places message directly in body"

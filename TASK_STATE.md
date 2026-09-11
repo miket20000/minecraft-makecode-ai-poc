@@ -75,6 +75,15 @@ Behavior Pack.
   `CONNECT_ENCRYPTED_OK` w świecie, ale pierwsza ramka Minecraft -> Companion
   nie została poprawnie odszyfrowana (`UnicodeDecodeError`). To częściowy
   `PASS` wyjścia Companion -> Minecraft i nadal `FAIL` pełnego round-trip.
+- Dalsze testy przeniesiono przez reverse SSH na `student-l-wm66` (`L-WM66`,
+  użytkownik `Giganci`) zgodnie z decyzją operatora. Chroniony most WinApp
+  v0.6.0 działa w aktywnej sesji 1; zwykły zrzut okna OGLES jest całkowicie
+  czarny, więc nie użyto ryzykownego `--capture-screen`.
+- Kandydat `5a87569` potwierdził, że po `ws:encrypt` klient wysyła jeszcze jedną
+  ramkę plaintext (302 bajty), a kolejne eventy i odpowiedzi są już poprawnie
+  odszyfrowywane. Wiadomość gracza dotarła jako `body.message`, nie historyczne
+  `body.properties.Message`; dlatego parser nie wysłał `hello`: pełny
+  round-trip tego SHA to `FAIL`, przy działającym szyfrowanym transporcie.
 
 ## Ograniczenia i decyzje
 
@@ -95,8 +104,8 @@ Behavior Pack.
 
 ## START HERE
 
-1. Kontynuuj tylko szyfrowany Companion: ustal, czy pierwsza ramka zwrotna po
-   włączeniu AES-256-CFB8 jest plaintextem albo wymaga innego stanu odbiorczego.
+1. Kontynuuj tylko szyfrowany Companion na `student-l-wm66`: odczytuj bieżący
+   event `PlayerMessage` także z `body.message`.
 2. Uzyskaj pełne `Minecraft -> Companion -> Minecraft`, następnie dołącz Echo
    API i powtórz pełny round-trip w rzeczywistym świecie.
 3. Po etapie Companion zaktualizuj raport, posprzątaj procesy i zatrzymaj się.

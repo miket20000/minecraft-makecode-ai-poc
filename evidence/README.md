@@ -47,3 +47,8 @@ on `mt` with WinApp CLI.
   agreement completed, AES-256-CFB8 outbound traffic reached Minecraft, but
   the first inbound frame failed UTF-8 decoding after decryption. Ephemeral
   public-key and salt values are deliberately not retained.
+- `connect-encrypted-5a87569.log` — on `student-l-wm66`, the candidate accepted
+  the one plaintext transition frame and then decrypted event and command
+  responses. The player message arrived in `body.message`, so the historical
+  `body.properties.Message` parser did not trigger the return command. This is
+  retained as `FAIL` for the full round-trip at that SHA.
